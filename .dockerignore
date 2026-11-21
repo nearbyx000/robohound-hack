@@ -1,0 +1,11 @@
+*
+!Dockerfile
+!entrypoint.sh
+!collision.py
+!safety.py
+!safety_node.py
+!test_safety.py
+!model/
+!model/**
+!unitree_go/
+!unitree_go/**
