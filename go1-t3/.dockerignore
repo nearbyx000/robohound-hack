@@ -1,0 +1,5 @@
+training
+tests
+episode_results.jsonl
+.git
+**/__pycache__

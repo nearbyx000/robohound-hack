@@ -1,0 +1,66 @@
+# Training configuration of the Go1 forward-walking policy (PPO, trained from scratch by the team).
+run_name: go1_walk_ppo
+seed: 1
+total_timesteps: 60000000
+n_envs: 14
+
+episode_length_s: 20.0
+
+commands:
+  vx: [0.1, 0.6]          # m/s, the judge range
+  focus_speed: 0.3         # preferred_speed_mps declared in ping
+  focus_prob: 0.5
+  zero_prob: 0.1
+
+domain_rand:
+  friction: [0.5, 1.25]
+  added_mass: [-1.0, 2.0]  # kg on the trunk
+  com_shift: 0.02          # m
+  kp_scale: [0.9, 1.1]
+  kd_scale: [0.9, 1.1]
+  max_latency_substeps: 4  # 0..8 ms of actuation delay
+  push_interval_s: 6.0
+  push_vel: 0.4
+  init_joint_noise: 0.05
+  obs_noise: 1.0
+
+rewards:
+  tracking_sigma: 0.25
+  base_height_target: 0.28
+  air_time_target: 0.3
+  term_height: 0.18
+  term_tilt_deg: 45.0
+  only_positive_rewards: true
+  scales:
+    tracking_lin_vel: 1.5
+    tracking_ang_vel: 0.5
+    lin_vel_z: -2.0
+    ang_vel_xy: -0.05
+    orientation: -1.0
+    base_height: -10.0
+    torques: -0.0002
+    dof_acc: -2.5e-7
+    action_rate: -0.01
+    action_smoothness: -0.005
+    hip_pos: -0.5
+    dof_pos_limits: -10.0
+    collision: -1.0
+    feet_air_time: 1.0
+    stand_still: -0.5
+    gait_symmetry: -0.1
+    termination: -5.0
+
+ppo:
+  learning_rate: 0.0003
+  n_steps: 1024
+  batch_size: 7168
+  n_epochs: 5
+  gamma: 0.99
+  gae_lambda: 0.95
+  clip_range: 0.2
+  ent_coef: 0.003
+  vf_coef: 1.0
+  max_grad_norm: 1.0
+  target_kl: 0.02
+  log_std_init: -0.5
+  net_arch: [256, 256, 128]

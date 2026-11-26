@@ -1,0 +1,1 @@
+{"protocol_version": "1.0", "supported_tasks": ["T2", "T3"], "self_trained_rl": true, "preferred_speed_mps": 0.3}
